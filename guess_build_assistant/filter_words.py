@@ -10,21 +10,26 @@ def gen_wordlist(wordfile):
     return text.split()
 
 # Cache repeated calls for checking the same word and pattern
-@hashable_lru
+#@hashable_lru
 def filter_word(word, wordpattern):
     """Checks if a word fits the wordpattern"""
     if len(word)!=len(wordpattern):
         return False
     # Enumerate allows iteration over 
     for ind,char in enumerate(wordpattern):
-        if char not in ["*",word[ind]]:
+        # Perform type checking to support string and char array wordpattern
+        if isinstance(char,str):
+            char_comp=char
+        else:
+            char_comp=chr(char)
+        if char_comp not in ["*",word[ind]]:
             return False
     return True
 
 
 # If user undoes a hint, use cache to pull out previous iteration
 # Smaller cache as few calls will be made before reset
-@hashable_lru
+#@hashable_lru
 def filter_wordlist(wordlist, wordpattern):
     """Checks a word pattern against the wordlist"""
     return [word for word in wordlist if filter_word(word,wordpattern)]
