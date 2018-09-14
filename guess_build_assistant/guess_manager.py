@@ -17,5 +17,9 @@ class GuessManager(object):
     def set_clue(self,pos,char):
         self.clue[pos]=ord(char)
 
+    def get_cluestr(self):
+        # Assuming only ascii for now
+        return self.clue.tobytes().decode("utf-8")
+
     def get_filtered_list(self):
         return filter_wordlist(self.wordlist, self.clue)
