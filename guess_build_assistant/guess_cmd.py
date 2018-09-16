@@ -115,7 +115,7 @@ class GuessCmd(cmd.Cmd):
 
     def do_list(self, args):
         """Shows the current filtered list."""
-        do_showlist(self, args)
+        self.do_showlist(args)
 
     def do_showlist(self, args):
         """Shows the current filtered list."""
