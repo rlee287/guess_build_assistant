@@ -25,6 +25,11 @@ def test_guess_length(fixture_wordlist):
     assert gm.length==7
     assert gm.get_cluestr()=="*******"
 
+def test_invalid_length(fixture_wordlist):
+    gm=GuessManager(wordlist_temp_file)
+    with pytest.raises(ValueError):
+        gm.set_length(-5)
+
 def test_guess_match_length(fixture_wordlist):
     gm=GuessManager(wordlist_temp_file)
     gm.set_length(10)
@@ -39,6 +44,16 @@ def test_guess_clue_char(fixture_wordlist):
     gm.set_length(10)
     gm.set_clue(1,"t")
     assert gm.get_cluestr()=="*t********"
+
+def test_invalid_clues(fixture_wordlist):
+    gm=GuessManager(wordlist_temp_file)
+    gm.set_length(3)
+    with pytest.raises(ValueError):
+        gm.set_clue(-1,"b")
+    with pytest.raises(ValueError):
+        gm.set_clue(6,"q")
+    with pytest.raises(ValueError):
+        gm.set_clue(2,"rhtg")
 
 def test_guess_match_char(fixture_wordlist):
     gm=GuessManager(wordlist_temp_file)

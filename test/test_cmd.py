@@ -30,7 +30,7 @@ def test_matching():
     gm.stdout=outcmd
     gm.onecmd("len 5")
     gm.onecmd("1 w")
-    gm.onecmd("2 a")
+    gm.onecmd("hint 2 a")
     gm.onecmd("showclue")
     outstr=outcmd.getvalue()
     assert "wa***"==outstr.rstrip("\n")
@@ -38,4 +38,28 @@ def test_matching():
     outstr=outcmd.getvalue()
     assert "wagon" in outstr
     assert "fire" not in outstr
+
+def test_badlen():
+    outcmd=io.StringIO()
+    gm=GuessCmd("wordlist.txt")
+    gm.stdout=outcmd
+    gm.onecmd("len -56")
+    outstr=outcmd.getvalue()
+    assert "Error:" in outstr
+
+def test_default_invalid_two():
+    outcmd=io.StringIO()
+    gm=GuessCmd("wordlist.txt")
+    gm.stdout=outcmd
+    gm.onecmd("garbase toijgsdf")
+    outstr=outcmd.getvalue()
+    assert "*** Unknown syntax:" in outstr
+
+def test_default_invalid_numspaces():
+    outcmd=io.StringIO()
+    gm=GuessCmd("wordlist.txt")
+    gm.stdout=outcmd
+    gm.onecmd("garbase toi jgs df")
+    outstr=outcmd.getvalue()
+    assert "*** Unknown syntax:" in outstr
 
