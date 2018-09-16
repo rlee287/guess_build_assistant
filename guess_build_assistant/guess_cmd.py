@@ -25,7 +25,8 @@ class GuessCmd(cmd.Cmd):
         super().__init__()
 
     def emptyline(self):
-        self.stdout.write(self.prompt)
+        # Do nothing
+        pass
 
     def do_reset(self, args):
         """Resets the game to begin anew."""
@@ -53,22 +54,22 @@ class GuessCmd(cmd.Cmd):
         # Do parsing again here
         argslist=line.split()
         if len(argslist)!=2:
-            Cmd.default(self, line)
+            super().default(line)
             return
         int_pos=-1
         try:
             int_pos=int(argslist[0])
         except ValueError:
-            Cmd.default(self, line)
+            super().default(line)
             return
         if len(argslist[1])>1:
-            Cmd.default(self, line)
+            super().default(line)
             return
         if int_pos<=0 or int_pos>self.guess_manager.length:
-            self.stdout.write("Error: position must be within the clue length")
+            self.stdout.write("Error: position must be within the clue length\n")
             return
         if argslist[1] not in "qwertyuiopasdfghjklzxcvbnm-*":
-            self.stdout.write("Error: char must be a letter, hyphen, or asterisk")
+            self.stdout.write("Error: char must be a letter, hyphen, or asterisk\n")
             return
         self.do_hint(line)
 
@@ -100,10 +101,10 @@ class GuessCmd(cmd.Cmd):
             self.stdout.write("Error: args must be of the form <number> <character>\n")
             return
         if int_pos<=0 or int_pos>self.guess_manager.length:
-            self.stdout.write("Error: position must be within the clue length")
+            self.stdout.write("Error: position must be within the clue length\n")
             return
         if argslist[1] not in "qwertyuiopasdfghjklzxcvbnm-*":
-            self.stdout.write("Error: char must be a letter, space, or asterisk")
+            self.stdout.write("Error: char must be a letter, space, or asterisk\n")
             return
         # UI is 1 based, program is 0 based
         self.guess_manager.set_clue(int_pos-1,argslist[1])
