@@ -7,11 +7,12 @@ class GuessCmd(cmd.Cmd):
        "reset" Resets the game to begin anew.
        "len <number>" Sets the length of the word.
        "hint <number> <character>" Sets a hint position.
-       "clue <number> <character>" Sets a hint position.
-       "<number> <character>" Sets a hint position.
+       "clue <number> <character>" Alias for "hint".
+       "<number> <character>" Alias for "hint" without a prefix.
        "wordlist <optional path>" Prints the wordlist or
                                   sets the wordlist if path is given.
        "showlist" Shows the filtered list of possible words.
+       "list" Alias for "showlist".
        "showclue" Shows the clue so far.
        "exit" or "quit" Quits the application.
     """
@@ -112,8 +113,12 @@ class GuessCmd(cmd.Cmd):
         self.stdout.write(self.guess_manager.get_cluestr())
         self.stdout.write("\n")
 
+    def do_list(self, args):
+        """Shows the current filtered list."""
+        do_showlist(self, args)
+
     def do_showlist(self, args):
-        """Shows the current list."""
+        """Shows the current filtered list."""
         for possibility in self.guess_manager.get_filtered_list():
             self.stdout.write(possibility)
             self.stdout.write("\n")
