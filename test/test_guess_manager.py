@@ -19,6 +19,10 @@ def fixture_wordlist(request):
         os.remove(wordlist_temp_file)
     request.addfinalizer(teardown)
 
+def test_invalid_wordlist():
+    with pytest.raises(FileNotFoundError):
+        gm=GuessManager("esroivhdf jhgidsgirdmhdf")
+
 def test_guess_length(fixture_wordlist):
     gm=GuessManager(wordlist_temp_file)
     gm.set_length(7)

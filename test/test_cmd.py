@@ -28,7 +28,7 @@ def test_matching():
     outcmd=io.StringIO()
     gm=GuessCmd("wordlist.txt")
     gm.stdout=outcmd
-    gm.onecmd("len 5")
+    gm.onecmd("5")
     gm.onecmd("1 w")
     gm.onecmd("hint 2 a")
     gm.onecmd("showclue")
