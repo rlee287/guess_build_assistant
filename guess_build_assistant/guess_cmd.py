@@ -8,7 +8,7 @@ class GuessCmd(cmd.Cmd):
        "len <number>" Sets the length of the word.
        "hint <number> <character>" Sets a hint position.
        "clue <number> <character>" Sets a hint position.
-       Nonimpl "<number> <character>" Sets a hint position.
+       "<number> <character>" Sets a hint position.
        "wordlist <optional path>" Prints the wordlist or
                                   sets the wordlist if path is given.
        "showlist" Shows the filtered list of possible words.
@@ -48,6 +48,29 @@ class GuessCmd(cmd.Cmd):
             self.stdout.write("Error: {} is not a valid length\n"
                                     .format(repr(args)))
 
+    def default(self, line):
+        # Do parsing again here
+        argslist=line.split()
+        if len(argslist)!=2:
+            Cmd.default(self, line)
+            return
+        int_pos=-1
+        try:
+            int_pos=int(argslist[0])
+        except ValueError:
+            Cmd.default(self, line)
+            return
+        if len(argslist[1])>1:
+            Cmd.default(self, line)
+            return
+        if int_pos<=0 or int_pos>self.guess_manager.length:
+            self.stdout.write("Error: position must be within the clue length")
+            return
+        if argslist[1] not in "qwertyuiopasdfghjklzxcvbnm-*":
+            self.stdout.write("Error: char must be a letter, hyphen, or asterisk")
+            return
+        self.do_hint(line)
+
     def do_clue(self, args):
         """Sets a clue.
            Inputs are of the format <number> <character>, in which
@@ -78,14 +101,11 @@ class GuessCmd(cmd.Cmd):
         if int_pos<=0 or int_pos>self.guess_manager.length:
             self.stdout.write("Error: position must be within the clue length")
             return
-        if argslist[1] not in "qwertyuiopasdfghjklzxcvbnm *":
+        if argslist[1] not in "qwertyuiopasdfghjklzxcvbnm-*":
             self.stdout.write("Error: char must be a letter, space, or asterisk")
             return
         # UI is 1 based, program is 0 based
         self.guess_manager.set_clue(int_pos-1,argslist[1])
-
-    #def default(self, line):
-    #    pass
 
     def do_showclue(self, args):
         """Shows the current clue."""
