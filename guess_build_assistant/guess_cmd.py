@@ -52,8 +52,11 @@ class GuessCmd(cmd.Cmd):
 
     def do_wordlist(self, args):
         """Prints out the wordlist or sets a new one."""
-        self.wordlist=args
-        self.do_reset(None)
+        if args:
+            self.wordlist=args
+            self.do_reset(None)
+        else:
+            self.stdout.write("Wordlist is {}\n".format(self.wordlist))
 
     def do_len(self, args):
         """Sets the length of the word."""
