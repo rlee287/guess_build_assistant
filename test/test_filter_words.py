@@ -9,7 +9,7 @@ from guess_build_assistant.filter_words import *
 
 wordlist_temp_file="ldsreoirkjfd.txt"
 
-@pytest.fixture(scope='function')
+@pytest.fixture(scope='module')
 def fixture_wordlist(request):
     """Fixture to create and remove a wordlist file"""
     with open(wordlist_temp_file,"w") as fil:
