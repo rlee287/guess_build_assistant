@@ -8,9 +8,8 @@ def _validate_clue_args(args):
     argslist=args.split()
     if len(argslist)!=2:
         return 1
-    int_pos=-1
     try:
-        int_pos=int(argslist[0])
+        int(argslist[0])
     except ValueError:
         return 1
     if len(argslist[1])>1:
