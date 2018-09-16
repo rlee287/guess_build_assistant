@@ -28,10 +28,11 @@ def test_wordlist_parse(fixture_wordlist):
 def test_wordfilter():
     assert filter_word("hihihi","******")
     assert filter_word("hihihi","hi**hi")
-    assert filter_word("abcd efg","****-***")
     assert filter_word("abcd efg","**** ***")
     assert not filter_word("qwegfbv","****")
     assert not filter_word("qwfc","qb**")
+    # Test space magics
+    assert filter_word("abcd efg","****-***")
     assert not filter_word("xy z","*-**")
 
 def test_wordfilter_array():
