@@ -1,6 +1,24 @@
 import cmd
 from .guess_manager import GuessManager
 
+# Utility func
+def _validate_clue_args(args):
+    """Returns 0 if OK, 1 for nonconforming args, 2 for bad char, 3 for other bad args
+        Deliberately skips length check as that is performed elsewhere"""
+    argslist=args.split()
+    if len(argslist)!=2:
+        return 1
+    int_pos=-1
+    try:
+        int_pos=int(argslist[0])
+    except ValueError:
+        return 1
+    if len(argslist[1])>1:
+        return 1
+    if argslist[1] not in "qwertyuiopasdfghjklzxcvbnm-*":
+        return 2
+    return 0
+
 class GuessCmd(cmd.Cmd):
     helpstr = """Overview of commands:
        "help" Prints out help information
@@ -43,8 +61,7 @@ class GuessCmd(cmd.Cmd):
         int_len=0
         try:
             int_len=int(args)
-            if int_len<=0:
-                raise ValueError
+            # Automatically catches negatives
             self.guess_manager.set_length(int_len)
         except ValueError:
             self.stdout.write("Error: {} is not a valid length\n"
@@ -52,24 +69,9 @@ class GuessCmd(cmd.Cmd):
 
     def default(self, line):
         # Do parsing again here
-        argslist=line.split()
-        if len(argslist)!=2:
+        errstat=_validate_clue_args(line)
+        if errstat==1:
             super().default(line)
-            return
-        int_pos=-1
-        try:
-            int_pos=int(argslist[0])
-        except ValueError:
-            super().default(line)
-            return
-        if len(argslist[1])>1:
-            super().default(line)
-            return
-        if int_pos<=0 or int_pos>self.guess_manager.length:
-            self.stdout.write("Error: position must be within the clue length\n")
-            return
-        if argslist[1] not in "qwertyuiopasdfghjklzxcvbnm-*":
-            self.stdout.write("Error: char must be a letter, hyphen, or asterisk\n")
             return
         self.do_hint(line)
 
@@ -87,27 +89,30 @@ class GuessCmd(cmd.Cmd):
            <number> is the letter position and <character> is the letter.
            Use "*" for the character to reset a hint.
         """
+        errstat=_validate_clue_args(args)
         argslist=args.split()
-        if len(argslist)!=2:
+        if errstat==1:
             self.stdout.write("Error: args must be of the form <number> <character>\n")
             return
+        if errstat==2:
+            self.stdout.write("Error: char must be a letter, space, or asterisk\n")
+            return
+        # TODO: Fix DRY violation by finding way to pass out parse results
         int_pos=-1
         try:
             int_pos=int(argslist[0])
         except ValueError:
             self.stdout.write("Error: args must be of the form <number> <character>\n")
             return
-        if len(argslist[1])>1:
-            self.stdout.write("Error: args must be of the form <number> <character>\n")
-            return
-        if int_pos<=0 or int_pos>self.guess_manager.length:
-            self.stdout.write("Error: position must be within the clue length\n")
-            return
-        if argslist[1] not in "qwertyuiopasdfghjklzxcvbnm-*":
-            self.stdout.write("Error: char must be a letter, space, or asterisk\n")
-            return
         # UI is 1 based, program is 0 based
-        self.guess_manager.set_clue(int_pos-1,argslist[1])
+        try:
+            self.guess_manager.set_clue(int_pos-1,argslist[1])
+        except ValueError as ve:
+            if "Position" in ve.args[0]:
+                self.stdout.write("Error: position must be within the clue length\n")
+                return
+            else:
+                raise
 
     def do_showclue(self, args):
         """Shows the current clue."""
