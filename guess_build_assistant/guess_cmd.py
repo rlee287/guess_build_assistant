@@ -20,7 +20,7 @@ def _validate_clue_args(args):
         return 1
     if len(argslist[1])>1:
         return 1
-    if argslist[1] not in "qwertyuiopasdfghjklzxcvbnm-*":
+    if argslist[1] not in "qwertyuiopasdfghjklzxcvbnm-*1234567890":
         return 2
     return 0
 
@@ -107,7 +107,8 @@ class GuessCmd(cmd.Cmd):
             self.stdout.write("Error: args must be of the form <number> <character>\n")
             return
         if errstat==2:
-            self.stdout.write("Error: char must be a letter, space, or asterisk\n")
+            self.stdout.write("Error: char must be a letter, "+
+                              "hyphen (space), digit, or asterisk\n")
             return
         # TODO: Fix DRY violation by finding way to pass out parse results
         int_pos=-1
