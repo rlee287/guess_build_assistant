@@ -3,9 +3,15 @@ from .guess_manager import GuessManager
 
 # Utility func
 def _validate_clue_args(args):
-    """Returns 0 if OK, 1 for nonconforming args, 2 for bad char, 3 for other bad args
-        Deliberately skips length check as that is performed elsewhere"""
+    """Returns 0 if OK for hint,
+       1 for nonconforming args,
+       2 for bad char,
+       3 for other bad args,
+       8 for only one arg
+       Deliberately skips length check as that is performed elsewhere"""
     argslist=args.split()
+    if len(argslist)==1:
+        return 8
     if len(argslist)!=2:
         return 1
     try:
@@ -25,6 +31,7 @@ class GuessCmd(cmd.Cmd):
        "len <number>" Sets the length of the word.
        "hint <number> <character>" Sets a hint position.
        "clue <number> <character>" Alias for "hint".
+       "<number>" Alias for "len" without a prefix.
        "<number> <character>" Alias for "hint" without a prefix.
        "wordlist <optional path>" Prints the wordlist or
                                   sets the wordlist if path is given.
@@ -74,6 +81,9 @@ class GuessCmd(cmd.Cmd):
         errstat=_validate_clue_args(line)
         if errstat==1:
             super().default(line)
+            return
+        if errstat==8:
+            self.do_len(line)
             return
         self.do_hint(line)
 
