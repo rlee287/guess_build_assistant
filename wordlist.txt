@@ -61,6 +61,7 @@ barrier
 baseball
 baseball bat
 baseball field
+basket
 basketball
 basket ball
 basketball hoop
@@ -292,6 +293,7 @@ climbing frame
 clock
 clock tower
 closet
+cloth
 clouds
 clown
 clown fish
@@ -334,6 +336,7 @@ corn dog
 cornucopia
 cotton candy
 couch
+course
 cow
 cowbell
 cowboy
@@ -560,6 +563,7 @@ fun park
 furniture
 futuristic house
 game
+games
 games controller
 gaming chair
 gaming console
@@ -598,6 +602,7 @@ goblin
 godzilla
 goggles
 go karting
+gold
 gold course
 golden apple
 goldfish
@@ -607,6 +612,7 @@ gold mine
 gold ring
 golem
 golf
+golf cane
 golf cart
 golf club
 golf course
@@ -624,6 +630,7 @@ great britain
 green
 greenhouse
 grenade
+guard
 guard dog
 guardian
 guitar
@@ -656,6 +663,7 @@ harmonica
 harp
 harry potter
 hat
+hatching
 head
 headband
 headphones
@@ -768,6 +776,7 @@ lantern
 laptop
 lasso
 laughing
+laundry
 laundry basket
 lava bucket
 lawn mower
@@ -1067,6 +1076,7 @@ popsicle
 portal
 poster
 post office
+pot
 potato
 potato chips
 potatoes
@@ -1450,6 +1460,7 @@ trash can
 treadmill
 treasure
 treasure chest
+tree
 tree frog
 treehouse
 t-rex
