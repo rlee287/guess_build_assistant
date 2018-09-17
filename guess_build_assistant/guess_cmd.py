@@ -36,6 +36,7 @@ class GuessCmd(cmd.Cmd):
        "wordlist <optional path>" Prints the wordlist or
                                   sets the wordlist if path is given.
        "showlist" Shows the filtered list of possible words.
+       "show" Alias for "showlist".
        "list" Alias for "showlist".
        "showclue" Shows the clue so far.
        "exit" or "quit" Quits the application.
@@ -131,6 +132,10 @@ class GuessCmd(cmd.Cmd):
         """Shows the current clue."""
         self.stdout.write(self.guess_manager.get_cluestr())
         self.stdout.write("\n")
+
+    def do_show(self, args):
+        """Shows the current filtered list."""
+        self.do_showlist(args)
 
     def do_list(self, args):
         """Shows the current filtered list."""
