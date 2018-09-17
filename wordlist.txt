@@ -1,7 +1,3 @@
-propeller
-harbor
-ravine
-witch house
 advent calendar
 air horn
 airplane
@@ -655,6 +651,7 @@ handbag
 handcuffs
 handstand
 happy
+harbor
 harmonica
 harp
 harry potter
@@ -1087,6 +1084,7 @@ printer
 prison cell
 prisoner
 projectile
+propeller
 protest
 pudding
 pump
@@ -1113,6 +1111,7 @@ railway
 rain
 rainbow
 raindrop
+ravine
 reading
 reaper
 recycle
