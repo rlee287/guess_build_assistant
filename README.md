@@ -1,6 +1,6 @@
 # Guess Build Assistant
 
-## A Tkinter-based helper for Guess the Build
+## A Cmd and Tkinter-based helper for Guess the Build
 
 ### Building
 
