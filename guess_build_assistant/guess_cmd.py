@@ -28,6 +28,7 @@ class GuessCmd(cmd.Cmd):
     helpstr = """Overview of commands:
        "help" Prints out help information
        "reset" Resets the game to begin anew.
+       "(no)autoshow" En/Disables autoshowing of list upon clue entry.
        "len <number>" Sets the length of the word.
        "hint <number> <character>" Sets a hint position.
        "clue <number> <character>" Alias for "hint".
@@ -43,16 +44,24 @@ class GuessCmd(cmd.Cmd):
     """
     intro = "Welcome to Guess Build Assistant!\n"+helpstr
     prompt = "guess>>> "
-    AUTOSHOW=True
 
     def __init__(self, wordlist):
         self.wordlist = wordlist
         self.guess_manager = GuessManager(wordlist)
+        self.AUTOSHOW=True
         super().__init__()
 
     def emptyline(self):
         # Do nothing
         pass
+
+    def do_autoshow(self, args):
+        """Enable autoshow after entering length or clue"""
+        self.AUTOSHOW=True
+
+    def do_noautoshow(self, args):
+        """Disable autoshow after entering length or clue"""
+        self.AUTOSHOW=False
 
     def do_reset(self, args):
         """Resets the game to begin anew."""
