@@ -49,6 +49,14 @@ def test_guess_clue_char(fixture_wordlist):
     gm.set_clue(1,"t")
     assert gm.get_cluestr()=="*t********"
 
+def test_guess_clue_override(fixture_wordlist):
+    gm=GuessManager(wordlist_temp_file)
+    gm.set_length(10)
+    gm.set_clue(1,"b")
+    assert gm.get_cluestr()=="*b********"
+    gm.set_clue(1,"e")
+    assert gm.get_cluestr()=="*e********"
+
 def test_invalid_clues(fixture_wordlist):
     gm=GuessManager(wordlist_temp_file)
     gm.set_length(3)

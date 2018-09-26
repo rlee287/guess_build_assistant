@@ -30,16 +30,34 @@ def test_matching():
     gm=GuessCmd("wordlist.txt")
     gm.stdout=outcmd
     gm.AUTOSHOW=False
-    gm.onecmd("5")
-    gm.onecmd("1 w")
-    gm.onecmd("hint 2 a")
-    gm.onecmd("showclue")
-    outstr=outcmd.getvalue()
-    assert "wa***"==outstr.rstrip("\n")
+    gm.onecmd("11")
+    gm.onecmd("6 -")
+    gm.onecmd("1 g")
     gm.onecmd("list")
     outstr=outcmd.getvalue()
-    assert "wagon" in outstr
-    assert "fire" not in outstr
+    assert "glass table" in outstr
+    assert "orange juice" not in outstr
+
+def test_matching_override():
+    outcmd=io.StringIO()
+    gm=GuessCmd("wordlist.txt")
+    gm.stdout=outcmd
+    gm.AUTOSHOW=False
+    gm.onecmd("7")
+    gm.onecmd("5 i")
+    gm.onecmd("hint 7 g")
+    gm.onecmd("hint 2 a")
+    gm.onecmd("list")
+    outstr=outcmd.getvalue()
+    assert "raining" in outstr
+    assert "snowing" not in outstr
+    curpos=outcmd.tell()
+    gm.onecmd("clue 2 n")
+    gm.onecmd("list")
+    outcmd.seek(curpos)
+    outstr=outcmd.read()
+    assert "snowing" in outstr
+    assert "raining" not in outstr
 
 def test_badlen():
     outcmd=io.StringIO()
