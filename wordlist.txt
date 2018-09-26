@@ -546,6 +546,7 @@ fortune cookie
 fountain
 four leaf clover
 fox
+frame
 frankenstein
 french flag
 french fries
@@ -1024,6 +1025,7 @@ piggy bank
 pigman
 pikachu
 pillow
+pillowcase
 pin
 pinata
 pineapple
@@ -1121,6 +1123,7 @@ railway
 rain
 rainbow
 raindrop
+raining
 ravine
 reading
 reaper
@@ -1264,6 +1267,7 @@ sniper
 snowball
 snowboarding
 snowflake
+snowing
 snowman
 soap
 soccer
