@@ -43,6 +43,7 @@ class GuessCmd(cmd.Cmd):
     """
     intro = "Welcome to Guess Build Assistant!\n"+helpstr
     prompt = "guess>>> "
+    AUTOSHOW=True
 
     def __init__(self, wordlist):
         self.wordlist = wordlist
@@ -73,6 +74,8 @@ class GuessCmd(cmd.Cmd):
             int_len=int(args)
             # Automatically catches negatives
             self.guess_manager.set_length(int_len)
+            if self.AUTOSHOW:
+                self.do_showlist(None)
         except ValueError:
             self.stdout.write("Error: {} is not a valid length\n"
                                     .format(repr(args)))
@@ -121,6 +124,8 @@ class GuessCmd(cmd.Cmd):
         # UI is 1 based, program is 0 based
         try:
             self.guess_manager.set_clue(int_pos-1,argslist[1])
+            if self.AUTOSHOW:
+               self.do_showlist(None)
         except ValueError as ve:
             if "Position" in ve.args[0]:
                 self.stdout.write("Error: position must be within the clue length\n")

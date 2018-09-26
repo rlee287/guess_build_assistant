@@ -17,6 +17,7 @@ def test_clue_setup():
     outcmd=io.StringIO()
     gm=GuessCmd("wordlist.txt")
     gm.stdout=outcmd
+    gm.AUTOSHOW=False
     gm.onecmd("len 5")
     gm.onecmd("1 b")
     gm.onecmd("clue 3 r")
@@ -28,6 +29,7 @@ def test_matching():
     outcmd=io.StringIO()
     gm=GuessCmd("wordlist.txt")
     gm.stdout=outcmd
+    gm.AUTOSHOW=False
     gm.onecmd("5")
     gm.onecmd("1 w")
     gm.onecmd("hint 2 a")
